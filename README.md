@@ -74,10 +74,10 @@ x<sub>1</sub>, x<sub>2</sub>
 Is convex?
 
 Testing with different initial points and SLSQP, the following happened:
-* **(x1, x2) = (10, 10)** is a **feasible initial point**, and returns the results:
-    + Optimal **p* = 2.0**
-    + Coordinates **(x1, x2) = (1.0, 1.0)**
-* **(x1, x2) = (0, 0)** is a **non-feasible initial point**. The solver threw the message `Positive directional derivative for linesearch`, meaning that the optimizer got into a position where it did not manage to find a direction where the value of the objective function decreases.
+* (x1, x2) = (10, 10) is a **feasible initial point**, and returns the results:
+    + Optimal p* = 2.0
+    + Coordinates (x1, x2) = (1.0, 1.0)
+* (x1, x2) = (0, 0) is a **non-feasible initial point**. The solver threw the message `Positive directional derivative for linesearch`, meaning that the optimizer got into a position where it did not manage to find a direction where the value of the objective function decreases.
 
 After running the solver with the Jacobian input and the feasible initial point above, the obtained results were the same, with just 9 Jacobian evaluations `njev`, as compared to 73 function evaluations `nfev` without the Jacobian method.
 
