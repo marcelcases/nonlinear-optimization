@@ -1,5 +1,5 @@
 # Nonlinear optimization programming exercises
-How to solve non-linear optimization problems using different solvers and techniques based on Python.  
+How to solve nonlinear optimization problems using different solvers and techniques based on Python.  
 
 ## About
 **Author**  
@@ -26,7 +26,7 @@ x<sub>1</sub>x<sub>2</sub> - x<sub>1</sub> - x<sub>2</sub> &le; -1.5
 var  
 x<sub>1</sub>, x<sub>2</sub>
 
-Solutions obtained with `scipy.optimize.minimize` library, using SLSQP (Sequential Least Squares Programming) method:
+Solutions obtained with `scipy.optimize.minimize` library, using SLSQP ([Sequential Least Squares Programming](https://en.wikipedia.org/wiki/Sequential_quadratic_programming)) method:
 
 | Initial point x0 | Optimal p* | Coordinates (x1,x2) | Function evaluations (nfev) |
 |------------------|------------|---------------------|-----------------------------|
@@ -213,20 +213,35 @@ def backtrack(dfx, x0, step):
     return incumbent, iters, acc, step
 ````
 
-The inputs of the function are the derivative of the objective function `dfx`, an initial point `x0`, and a `step` that sets the resolution of the solver. The solver iterates indefinitely until the accuracy value `acc` is reached, which means that a local/global minima has been found. After this, the solution (x*) is returned (`incumbent`), as well as the number of iterations, the accuracy and the step value.
+The inputs of the function are the first-degree derivative of the objective function `dfx`, an initial point `x0`, and a `step` that sets the resolution of the solver. The solver iterates indefinitely until the accuracy value `acc` is reached, which means that a local/global minima has been found. After this, the solution (x*) is returned (`incumbent`), as well as the number of iterations, the accuracy and the step value.
 
 **Newton’s Method algorithm**
 
-````python
-algoritme
-````
-
-Explicació...
-
+Newton's Method uses a second-order Taylor series expansion of the function about the current design point, i.e. a quadratic model. Scipy's library `optimize` uses this method for computing the minimum value of the function.
 
 **Results and performance**
 
-Taula...
+For f(x) = 2x<sup>2</sup> - 0.5, with initial point x<sub>0</sub> = 3, the results obtained with both methods are the following:
+
+| Solver                             | Optimal p* | Optimal x* | Iterations |
+|------------------------------------|------------|------------|------------|
+| Backtracking Line Search           | -0.498     | 0.0248     | 1196       |
+| Newton's with Jacobian and Hessian | -0.5       | 0.0        | 5          |
+
+For f(x) = 2x<sup>4</sup> - 4x<sup>2</sup> + x - 0.5, the results obtained with both methods are the following:
+
+| Initial point x0 | Solver                             | Optimal p* | Optimal x* | Iterations |
+|------------------|------------------------------------|------------|------------|------------|
+| -2               | Backtracking Line Search           | -3.529     | -1.062     | 228        |
+| -2               | Newton's with Jacobian and Hessian | -3.529     | -1.057     | 7          |
+| -0.5             | Backtracking Line Search           | -3.529     | -1.052     | 304        |
+| -0.5             | Newton's with Jacobian and Hessian | -3.529     | -1.057     | 8          |
+| 0.5              | Backtracking Line Search           | -1.533     | 0.922      | 399        |
+| 0.5              | Newton's with Jacobian and Hessian | -1.533     | 0.930      | 8          |
+| 2                | Backtracking Line Search           | -1.533     | 0.937      | 297        |
+| 2                | Newton's with Jacobian and Hessian | -1.533     | 0.930      | 7          |
+
+For the BLS, the `step` parameter has been set to 1e-3. Making it lower will improve the performance of the algorithm by reducing the computing time, but the results would not be as accurate.
 
 **Plots**
 
@@ -237,6 +252,8 @@ For f(x) = 2x<sup>2</sup> - 0.5, any initial point will converge to the global m
 For f(x) = 2x<sup>4</sup> - 4x<sup>2</sup> + x - 0.5, depending on the initial point, the solution will fall into either:
 * the local minima, if x<sub>0</sub> &gt; 0.15
 * the global minima, otherwise
+
+The local minima is (x*, p*) = (0.92, -1.53), and the global minima is (x*, p*) = (-1.05, -3.52).
 
 ![ex6b](img/ex6b_fit.png)
 
@@ -312,4 +329,5 @@ optimal dual variables lambda1 = [2.99999975]   lambda2 = [2.99999975]
 Class slides  
 CVXPY [https://www.cvxpy.org/](https://www.cvxpy.org/)  
 Convex optimization [https://en.wikipedia.org/wiki/Convex_optimization](https://en.wikipedia.org/wiki/Convex_optimization)  
+Sequential Least Squares Programming [https://en.wikipedia.org/wiki/Sequential_quadratic_programming](https://en.wikipedia.org/wiki/Sequential_quadratic_programming)  
 Backtracking Line Search [https://sites.math.washington.edu/~burke/crs/408/lectures/L7-line-search.pdf](https://sites.math.washington.edu/~burke/crs/408/lectures/L7-line-search.pdf)  
