@@ -45,7 +45,50 @@ for x0 in x0s:
 
 
 #%%
-#  Newton's Method
+#  Newton's Method for optimization (SLSQP solver from Scipy uses this method)
+
+from scipy.optimize import minimize
+import numpy as np
+from numdifftools import Jacobian, Hessian
+
+print('\nSOLVING USING SCIPY\n')
+
+# First function to optimize
+fun = lambda x: 2*x**2 - 0.5 # objective function
+fun_Jac = lambda x: Jacobian(lambda x: fun(x))(x).ravel() # Jacobian
+fun_Hess = lambda x: Hessian(lambda x: fun(x))(x) # Hessian
+cons = () # unconstrained
+bnds = ((None, None), )*1 # unbounded
+
+# initial guess
+x0 = 3.0
+
+res = minimize(fun, x0, bounds=bnds, constraints=cons, jac=fun_Jac, hess=fun_Hess)
+print('\n',res)
+print("JAC+HESS: optimal value p*", res.fun)
+print("JAC+HESS: optimal var: x = ", res.x)
+
+
+# Second function to optimize
+fun = lambda x: 2*x**4 - 4*x**2 + x - 0.5 # objective function
+fun_Jac = lambda x: Jacobian(lambda x: fun(x))(x).ravel() # Jacobian
+fun_Hess = lambda x: Hessian(lambda x: fun(x))(x) # Hessian
+cons = () # unconstrained
+bnds = ((None, None), )*1 # unbounded
+
+# initial guesses
+x0s = [-2., -0.5, 0.5, 2.]
+
+for x0 in x0s:
+    res = minimize(fun, x0, bounds=bnds, constraints=cons, jac=fun_Jac, hess=fun_Hess)
+    print('\n',res)
+    print("JAC+HESS: optimal value p*", res.fun)
+    print("JAC+HESS: optimal var: x = ", res.x)
+
+
+
+#%%
+#  Newton's Method for finding roots
 
 import numpy as np
 from numdifftools import Derivative
@@ -71,3 +114,4 @@ def df(x):
 x0s = [-2., -0.5, 0.5, 2.]
 for x0 in x0s:
     newton(f, df, x0, 1e-5)
+# %%
