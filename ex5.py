@@ -1,7 +1,12 @@
-
-#  min      ...
-#  s.t.     ...
-#  var      x
+#  Exercise 5
+#  TOML-MIRI
+#  Marcel Cases
+#  30-mar-2021
+#
+#  min      x1^2 + x2^2
+#  s.t.     (x1 - 1)^2 + (x2 - 1)^2 ≤ 1
+#           (x1 - 1)^2 + (x2 + 1)^2 ≤ 1
+#  var      x1, x2
 
 #%%
 import cvxpy as cp

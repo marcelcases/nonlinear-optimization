@@ -1,7 +1,14 @@
-# Network Utility problem
-#  min      ...
-#  s.t.     ...
-#  var      x
+#  Exercise 7 - Network Utility problem
+#  TOML-MIRI
+#  Marcel Cases
+#  01-apr-2021
+#
+#  min      log x1 + log x2 + log x3
+#  s.t.     x1 + x3 ≤ 1
+#           x1 + x2 ≤ 2
+#           x3 ≤ 1
+#           x1, x2, x3 ≥ 0
+#  var      x1, x2, x3
 
 import cvxpy as cp
 

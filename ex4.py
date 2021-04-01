@@ -1,6 +1,10 @@
-
-#  min      ...
-#  s.t.     ...
+#  Exercise 4
+#  TOML-MIRI
+#  Marcel Cases
+#  28-mar-2021
+#
+#  min      x^2 + 1
+#  s.t.     (x-2)(x-4) ≤ 0
 #  var      x
 
 

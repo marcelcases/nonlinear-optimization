@@ -1,7 +1,15 @@
-#  Resource Allocation problem
-#  min      ...
-#  s.t.     ...
-#  var      x
+#  Exercise 8 - Resource Allocation problem
+#  TOML-MIRI
+#  Marcel Cases
+#  01-apr-2021
+#
+#  min      log x1 + log x2 + log x3
+#  s.t.     x1 + x2 ≤ R12
+#           x1 ≤ R23
+#           x3 ≤ R32
+#           R12 + R23 + R32 ≤ 1
+#           xi, Ri ≥ 0
+#  var      x1, x2, x3, R12, R23, R32
 
 import cvxpy as cp
 

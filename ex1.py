@@ -1,7 +1,12 @@
-
-#  min      ...
-#  s.t.     ...
-#  var      ...
+#  Exercise 1
+#  TOML-MIRI
+#  Marcel Cases
+#  28-mar-2021
+#
+#  min      (e^x1)*(4*x1^2 + 2*x2^2 + 4*x1*x2 + 2*x2 + 1)
+#  s.t.     x1*x2 - x1 - x2 ≤ -1.5
+#           -x1*x2 ≤ 10
+#  var      x1, x2
 
 
 from scipy.optimize import minimize

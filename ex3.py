@@ -1,7 +1,11 @@
-
+#  Exercise 3
+#  TOML-MIRI
+#  Marcel Cases
+#  28-mar-2021
+#
 #  min      x1^2 + x2^2
-#  s.t.     x1^2 +x1*x2 + x2^2 - 3   <= 0
-#           3x1 + 2x2 >= 3
+#  s.t.     x1^2 + x1*x2 + x2^2 ≤ 3
+#           3*x1 + 2*x2 ≥ 3
 #  var      x1, x2
 
 #%%

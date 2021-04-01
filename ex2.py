@@ -1,6 +1,15 @@
-
+#  Exercise 2
+#  TOML-MIRI
+#  Marcel Cases
+#  28-mar-2021
+#
 #  min      x1^2 + x2^2
-#  s.t.     ...
+#  s.t.     -x1 ≤ -0.5
+#           -x1 - x2 + 1 ≤ 0
+#           -x1^2 - x2^2 + 1 ≤ 0
+#           -9*x1^2 - x2^2 + 9 ≤ 0
+#           -x1^2 - x2 ≤ 0
+#           x1 - x2^2 ≤ 0
 #  var      x1, x2
 
 
