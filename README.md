@@ -1,4 +1,4 @@
-# Non-linear optimization programming exercises
+# Nonlinear optimization programming exercises
 How to solve non-linear optimization problems using different solvers and techniques based on Python.  
 
 ## About
@@ -12,7 +12,7 @@ April 2021
 
 ## Exercises
 ### Exercise 1
-[Source code](ex1.py)
+[Source code](https://github.com/marcelcases/nonlinear-optimization/blob/master/ex1.py)
 
 Considering the optimization problem:  
 
@@ -55,6 +55,7 @@ Does the graph help? no
 
 
 ### Exercise 2
+[Source code](https://github.com/marcelcases/nonlinear-optimization/blob/master/ex2.py)
 
 Considering the optimization problem:  
 
@@ -87,6 +88,7 @@ The plot of the objective function is as follows:
 ![ex2](img/ex2_fit.png)
 
 ### Exercise 3
+[Source code](https://github.com/marcelcases/nonlinear-optimization/blob/master/ex3.py)
 
 Considering the optimization problem:  
 
@@ -122,6 +124,7 @@ Using (x<sub>1</sub>, x<sub>2</sub>) = (10, 10) as the initial guess, results ar
 CVXPY also provides the dual values &lambda;<sub>1</sub> = 0 and &lambda;<sub>2</sub> = 0.4615.
 
 ### Exercise 4
+[Source code](https://github.com/marcelcases/nonlinear-optimization/blob/master/ex4.py)
 
 Considering the optimization problem:  
 
@@ -152,6 +155,7 @@ As shown in the plot, the minimum of the function within the feasible area is th
 The dual values obtained are &lambda; = 2 and d*=5.
 
 ### Exercise 5
+[Source code](https://github.com/marcelcases/nonlinear-optimization/blob/master/ex5.py)
 
 Considering the optimization problem:  
 
@@ -176,8 +180,136 @@ optimal dual variables lambda2 =  28013.52446781738
 ````
 
 ### Exercise 6
+[Source code](https://github.com/marcelcases/nonlinear-optimization/blob/master/ex6.py)
+
+**Gradient Descent Methods for an unconstrained optimization problem**
+
+The Gradient Descent Algorithm assumes that
+
+x<sup>(k+1)</sup> = x<sup>(k)</sup> + t&Delta;x = x<sup>(k)</sup> - t&nabla;f(x<sup>(k)</sup>)
+
+For this problem, two functions are minimized:
+* f(x) = 2x<sup>2</sup> - 0.5, with initial point x<sub>0</sub> = 3
+* f(x) = 2x<sup>4</sup> - 4x<sup>2</sup> + x - 0.5, with initial points x<sub>0</sub> = -2, x<sub>0</sub> = -0.5, x<sub>0</sub> = 0.5, x<sub>0</sub> = 2
+
+Two Gradient Descent methods are used:
+* Backtracking Line Search
+* Newton’s Method
+
+This problem has been optimized by using **custom developed solvers** with basic Python libraries.
+
+**Backtracking Line Search algorithm**
+
+````python
+def backtrack(dfx, x0, step):
+    incumbent = x0 # result
+    iters = 0
+    acc = 1e-4
+    while (acc >= 1e-4):
+        newincumbent = incumbent - step*dfx(incumbent)
+        acc = np.absolute(newincumbent - incumbent)
+        incumbent = newincumbent
+        iters += 1
+    return incumbent, iters, acc, step
+````
+
+The inputs of the function are the derivative of the objective function `dfx`, an initial point `x0`, and a `step` that sets the resolution of the solver. The solver iterates indefinitely until the accuracy value `acc` is reached, which means that a local/global minima has been found. After this, the solution (x*) is returned (`incumbent`), as well as the number of iterations, the accuracy and the step value.
+
+**Newton’s Method algorithm**
+
+````python
+algoritme
+````
+
+Explicació...
 
 
+**Results and performance**
+
+Taula...
+
+**Plots**
+
+For f(x) = 2x<sup>2</sup> - 0.5, any initial point will converge to the global minimum of the function, which is (x*, p*) = (0.0, -0.5).
+
+![ex6a](img/ex6a_fit.png)
+
+For f(x) = 2x<sup>4</sup> - 4x<sup>2</sup> + x - 0.5, depending on the initial point, the solution will fall into either:
+* the local minima, if x<sub>0</sub> &gt; 0.15
+* the global minima, otherwise
+
+![ex6b](img/ex6b_fit.png)
 
 ### Exercise 7
+[Source code](https://github.com/marcelcases/nonlinear-optimization/blob/master/ex7.py)
+
+**Network Utility problem**
+
+A networking problem where sources traverse links from routers in order to transmit data. Source 1 traverses link 1 and 2, source 2 traverses link 2 and source 3 traverses link 1 and 5. The goal is to maximize the transmission rate _x<sub>s</sub>_.
+
+The model of the problem is the following:
+
+maximize   
+log x<sub>1</sub> + log x<sub>2</sub> + log x<sub>3</sub>  
+
+subject to  
+x<sub>1</sub> + x<sub>3</sub> &le; 1  
+x<sub>1</sub> + x<sub>2</sub> &le; 2  
+x<sub>3</sub> &le; 1  
+x<sub>1</sub>, x<sub>2</sub>,  x<sub>3</sub> &ge; 0  
+
+var  
+x<sub>1</sub>, x<sub>2</sub>,  x<sub>3</sub>  
+
+Using CVXPY as the solver, the following results are obtained:
+````
+solve -0.9547712365062518
+status: optimal
+optimal value p* = -0.9547712365062518
+optimal var: x1 = 0.4226489442893967  x2 = 1.577351049782123  x3 = 0.5773510541368012
+optimal dual variables lambda1 = 1.7320483134403175   
+                        lambda2 = 0.6339745314617544   
+                        lambda3 = 6.437850296384749e-09   
+                        lambda4 = 6.544679319172325e-09   
+                        lambda5 = 1.7755538040590713e-09
+````
+
 ### Exercise 8
+[Source code](https://github.com/marcelcases/nonlinear-optimization/blob/master/ex8.py)
+
+**Resource Allocation problem**
+
+A resource allocation problem for a wireless network where traffic has to be assigned to nodes and links. Collisions have to be avoided (e.g. time R<sub>12</sub> can not transmit simultaneously with R<sub>23</sub>), and links are bidirectional (R<sub>12</sub> + R<sub>23</sub> + R<sub>32</sub> &le; 1).
+
+The model of the problem is the following:
+
+maximize   
+log x<sub>1</sub> + log x<sub>2</sub> + log x<sub>3</sub>  
+
+subject to  
+x<sub>1</sub> + x<sub>2</sub> &le; R<sub>12</sub>  
+x<sub>1</sub> &le; R<sub>23</sub>  
+x<sub>3</sub> &le; R<sub>32</sub>  
+R<sub>12</sub> + R<sub>23</sub> + R<sub>32</sub> &le; 1  
+x<sub>i</sub>, R<sub>i</sub> &ge; 0
+
+var  
+x<sub>1</sub>, x<sub>2</sub>,  x<sub>3</sub>, R<sub>12</sub>, R<sub>23</sub>, R<sub>32</sub>  
+
+Using CVXPY as the solver, the following results are obtained:
+````
+solve -3.9889840093737394
+status: optimal
+optimal value p* = -3.9889840093737394
+optimal var: x1 = [0.16666665]  x2 = [0.33333335]  x3 = [0.33333335]  
+                        r12 = [0.5]  r23 = [0.16666665]  r32 = [0.33333335]
+optimal dual variables lambda1 = [2.99999975]   lambda2 = [2.99999975]   
+                        lambda3 = [2.99999975]   u1 = [2.99999975]
+````
+
+
+## References
+Class slides  
+CVXPY [https://www.cvxpy.org/](https://www.cvxpy.org/)  
+Convex optimization [https://en.wikipedia.org/wiki/Convex_optimization](https://en.wikipedia.org/wiki/Convex_optimization)  
+Backtracking Line Search [https://sites.math.washington.edu/~burke/crs/408/lectures/L7-line-search.pdf](https://sites.math.washington.edu/~burke/crs/408/lectures/L7-line-search.pdf)  
