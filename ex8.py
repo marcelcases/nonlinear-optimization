@@ -3,7 +3,7 @@
 #  Marcel Cases
 #  01-apr-2021
 #
-#  min      log x1 + log x2 + log x3
+#  max      log x1 + log x2 + log x3
 #  s.t.     x1 + x2 ≤ R12
 #           x1 ≤ R23
 #           x3 ≤ R32
