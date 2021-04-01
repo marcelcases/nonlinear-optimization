@@ -12,6 +12,7 @@ April 2021
 
 ## Exercises
 ### Exercise 1
+[Source code](ex1.py)
 
 Considering the optimization problem:  
 
@@ -144,13 +145,39 @@ optimal dual variables lambda =  [2.00003221]
 
 Graphically, 
 
-![ex2](img/ex4_fit.png)
+![ex4](img/ex4_fit.png)
 
-As shown in the plot, the minimum of the function within the feasible area is (x*, p*) = (2.0, 5.0).
+As shown in the plot, the minimum of the function within the feasible area is the point (x*, p*) = (2.0, 5.0).
 
 The dual values obtained are &lambda; = 2 and d*=5.
 
 ### Exercise 5
+
+Considering the optimization problem:  
+
+minimize   
+x<sub>1</sub><sup>2</sup> + x<sub>2</sub><sup>2</sup>  
+
+subject to  
+ (x<sub>1</sub> - 1)<sup>2</sup> + (x<sub>2</sub> - 1)<sup>2</sup> &le; 1  
+ (x<sub>1</sub> - 1)<sup>2</sup> + (x<sub>2</sub> + 1)<sup>2</sup> &le; 1  
+
+var  
+x<sub>1</sub>, x<sub>2</sub>
+
+Using CVXPY as the solver, the following results are obtained:
+````
+solve 0.9999658242523712
+status: optimal
+optimal value p* =  0.9999658242523712
+optimal var: x1 =  0.9999802295393706  x2 =  1.9912424211981957e-14
+optimal dual variables lambda1 =  28013.52446782075
+optimal dual variables lambda2 =  28013.52446781738
+````
+
 ### Exercise 6
+
+
+
 ### Exercise 7
 ### Exercise 8
