@@ -9,8 +9,10 @@
 
 
 #%%
+# CVXPY
 import cvxpy as cp
 import numpy as np
+import time
 
 print('\nSOLVING USING CVXPY\n')
 
@@ -27,12 +29,43 @@ constraints = [f1<=0.]
 
 # Form and solve problem.
 prob = cp.Problem(obj, constraints)
+start_time = time.time()*1000
 print("solve", prob.solve())  # Returns the optimal value.
+end_time = time.time()*1000
 print("status:", prob.status)
 print("optimal value p* = ", prob.value)
 print("optimal var: x = ", x.value)
 print("optimal dual variables lambda = ", constraints[0].dual_value)
+print("exec time (ms): ", end_time - start_time)
 
+
+#%%
+#Scipy
+
+from scipy.optimize import minimize
+import numpy as np
+from numdifftools import Jacobian, Hessian
+import time
+
+print('\nSOLVING USING SCIPY\n')
+
+# First function to optimize
+fun = lambda x: x**2 + 1 # objective function
+fun_Jac = lambda x: Jacobian(lambda x: fun(x))(x).ravel() # Jacobian
+fun_Hess = lambda x: Hessian(lambda x: fun(x))(x) # Hessian
+cons = ({'type': 'ineq', 'fun': lambda x: -x**2 + 6*x - 8})
+bnds = ((None, None), )*1 # unbounded
+
+# initial guess
+x0 = 3.85
+
+start_time = time.time()*1000
+res = minimize(fun, x0, bounds=bnds, constraints=cons, jac=fun_Jac, hess=fun_Hess)
+end_time = time.time()*1000
+print('\n',res)
+print("JAC+HESS: optimal value p*", res.fun)
+print("JAC+HESS: optimal var: x = ", res.x)
+print("exec time (ms): ", end_time - start_time)
 
 
 ## Plots
