@@ -10,11 +10,15 @@
 #  Backtracking Line Search
 import numpy as np
 from numdifftools import Derivative
+import time
+
+print('\nSOLVING USING BLS\n')
+
 
 def backtrack(dfx, x0, step):
     incumbent = x0 # result
     iters = 0
-    acc = 1e-4
+    acc = 1
     while (acc >= 1e-4):
         newincumbent = incumbent - step*dfx(incumbent)
         acc = np.absolute(newincumbent - incumbent)
@@ -22,25 +26,30 @@ def backtrack(dfx, x0, step):
         iters += 1
     return incumbent, iters, acc, step
 
-def show_results(func, incumbent, iters, acc, step):
-    print("min f: ", func)
-    print("at x = ", incumbent)
-    print("iters: ", iters)
-    print("acc:   ", acc)
-    print("step:  ", step, "\n")
+def show_results(func, incumbent, iters, acc, step, time):
+    print("min f:     ", func)
+    print("at x =     ", incumbent)
+    print("iters:     ", iters)
+    print("acc:       ", acc)
+    print("step:      ", step)
+    print("time (ms): ", time, "\n")
 
 
 
 f = lambda x: 2*x**2 - 0.5
-incumbent, iters, acc, step = backtrack(dfx = Derivative(f), x0 = 3., step = 0.001)
-show_results(f(incumbent), incumbent, iters, acc, step)
+start_time = time.time()*1000
+incumbent, iters, acc, step = backtrack(dfx = Derivative(f), x0 = 3., step = 1e-3)
+end_time = time.time()*1000
+show_results(f(incumbent), incumbent, iters, acc, step, time=end_time-start_time)
 
 
 f = lambda x: 2*x**4 - 4*x**2 + x - 0.5
 x0s = [-2., -0.5, 0.5, 2.]
 for x0 in x0s:
-    incumbent, iters, acc, step = backtrack(dfx = Derivative(f), x0 = x0, step = 0.001)
-    show_results(f(incumbent), incumbent, iters, acc, step)
+    start_time = time.time()*1000
+    incumbent, iters, acc, step = backtrack(dfx = Derivative(f), x0 = x0, step = 1e-3)
+    end_time = time.time()*1000
+    show_results(f(incumbent), incumbent, iters, acc, step, time=end_time-start_time)
 
 
 
@@ -63,10 +72,13 @@ bnds = ((None, None), )*1 # unbounded
 # initial guess
 x0 = 3.0
 
+start_time = time.time()*1000
 res = minimize(fun, x0, bounds=bnds, constraints=cons, jac=fun_Jac, hess=fun_Hess)
+end_time = time.time()*1000
 print('\n',res)
 print("JAC+HESS: optimal value p*", res.fun)
 print("JAC+HESS: optimal var: x = ", res.x)
+print("exec time (ms): ", end_time - start_time)
 
 
 # Second function to optimize
@@ -80,10 +92,13 @@ bnds = ((None, None), )*1 # unbounded
 x0s = [-2., -0.5, 0.5, 2.]
 
 for x0 in x0s:
+    start_time = time.time()*1000
     res = minimize(fun, x0, bounds=bnds, constraints=cons, jac=fun_Jac, hess=fun_Hess)
+    end_time = time.time()*1000
     print('\n',res)
     print("JAC+HESS: optimal value p*", res.fun)
     print("JAC+HESS: optimal var: x = ", res.x)
+    print("exec time (ms): ", end_time - start_time)
 
 
 

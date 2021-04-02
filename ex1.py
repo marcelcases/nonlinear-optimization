@@ -12,6 +12,7 @@
 from scipy.optimize import minimize
 import numpy as np
 from numdifftools import Jacobian
+import time
 
 # Objective function
 fun = lambda x: np.exp(x[0]) * (4*x[0]**2 + 2*x[1]**2 + 4*x[0]*x[1] + 2*x[1] + 1)
@@ -39,17 +40,22 @@ x0s = [(0,0),
 # of several variables with any combination of bounds, equality and inequality constraints. 
 
 for x0 in x0s:
+      start_time = time.time()*1000
       res1 = minimize(fun, x0[0], method='SLSQP', bounds=bnds, constraints=cons)
+      end_time = time.time()*1000
       print('\n',res1)
       print("optimal value p*", res1.fun)
       print("optimal var: x1 = ", res1.x[0], " x2 = ", res1.x[1])
+      print("exec time (ms): ", end_time - start_time)
 
 for x0 in x0s:
+      start_time = time.time()*1000
       res2 = minimize(fun, x0[0], method='SLSQP', bounds=bnds, constraints=cons,jac=fun_Jac)
+      end_time = time.time()*1000
       print('\n',res2)
       print("JAC: optimal value p*", res2.fun)
       print("JAC: optimal var: x1 = ", res2.x[0], " x2 = ", res2.x[1])
-
+      print("exec time (ms): ", end_time - start_time)
 
 
 

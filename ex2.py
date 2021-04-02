@@ -16,6 +16,7 @@
 #%%
 from scipy.optimize import minimize
 from numdifftools import Jacobian
+import time
 
 print('\nSOLVING USING SCIPY\n')
 
@@ -46,15 +47,21 @@ x0 = (10,10) # feasible initian point
 # Method SLSQP uses Sequential Least SQuares Programming to minimize a function 
 # of several variables with any combination of bounds, equality and inequality constraints. 
 
+start_time = time.time()*1000
 res = minimize(fun, x0, method='SLSQP', bounds=bnds, constraints=cons)
+end_time = time.time()*1000
 print(res)
 print("optimal value p*", res.fun)
 print("optimal var: x1 = ", res.x[0], " x2 = ", res.x[1])
+print("exec time (ms): ", end_time - start_time)
 
+start_time = time.time()*1000
 res2 = minimize(fun, x0, method='SLSQP', bounds=bnds, constraints=cons,jac=fun_Jac)
+end_time = time.time()*1000
 print('\n',res2)
 print("JAC: optimal value p*", res2.fun)
 print("JAC: optimal var: x1 = ", res2.x[0], " x2 = ", res2.x[1])
+print("exec time (ms): ", end_time - start_time)
 
 
 ## Plots
