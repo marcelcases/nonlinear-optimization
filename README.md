@@ -26,32 +26,33 @@ x<sub>1</sub>x<sub>2</sub> - x<sub>1</sub> - x<sub>2</sub> &le; -1.5
 var  
 x<sub>1</sub>, x<sub>2</sub>
 
-Solutions obtained with `scipy.optimize.minimize` library, using SLSQP ([Sequential Least Squares Programming](https://en.wikipedia.org/wiki/Sequential_quadratic_programming)) method:
+TODO: Is convex?
 
-| Initial point x0 | Optimal p* | Coordinates (x1,x2) | Function evaluations (nfev) |
-|------------------|------------|---------------------|-----------------------------|
-| (0,0)            | 0.0235     | (-9.54,1.04)        | 54                          |
-| (10,20)          | 3.0607     | (1.18,-1.73)        | 70                          |
-| (-10,1)          | 0.0235     | (-9.54,1.04)        | 34                          |
-| (-30,-30)        | 0.0235     | (-9.54,1.04)        | 41                          |
+Solutions obtained with [Scipy's `optimize.minimize` library](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html), using SLSQP ([Sequential Least Squares Programming](https://en.wikipedia.org/wiki/Sequential_quadratic_programming)) method:
+
+| Initial point x<sub>0</sub> | Optimal p* | Coordinates (x<sub>1</sub>, x<sub>2</sub>)*  | Function evaluations (nfev) | Execution time (ms) |
+|-----------------------------|------------|----------------------------------------------|-----------------------------|---------------------|
+| (0,0)                       | 0.0235     | (-9.54,1.04)                                 | 54                          | 7.99                |
+| (10,20)                     | 3.0607     | (1.18,-1.73)                                 | 70                          | 11.00               |
+| (-10,1)                     | 0.0235     | (-9.54,1.04)                                 | 34                          | 5.98                |
+| (-30,-30)                   | 0.0235     | (-9.54,1.04)                                 | 41                          | 7.97                |
 
 Solutions using the same parameters, plus a Jacobian input:  
 
-| Initial point x0 | Optimal p*   | Coordinates (x1,x2) | Jacobian evaluations (njev) |
-|------------------|--------------|---------------------|-----------------------------|
-| (0,0)            | 0.0235       | (-9.54,1.04)        | 17                          |
-| (10,20)          | 3.0607       | (1.18,-1.73)        | 21                          |
-| (-10,1)          | 0.0235       | (-9.54,1.04)        | 11                          |
-| (-30,-30)        | **141.0364** | **(-1.06,-6.45)**   | 21                          |
+| Initial point x<sub>0</sub> | Optimal p*   | Coordinates (x<sub>1</sub>, x<sub>2</sub>)* | Jacobian evaluations (njev) | Execution time (ms) |
+|-----------------------------|--------------|---------------------------------------------|-----------------------------|---------------------|
+| (0,0)                       | 0.0235       | (-9.54,1.04)                                | 17                          | 52.02               |
+| (10,20)                     | 3.0607       | (1.18,-1.73)                                | 21                          | 65.02               |
+| (-10,1)                     | 0.0235       | (-9.54,1.04)                                | 11                          | 28.02               |
+| (-30,-30)                   | **141.0364** | **(-1.06,-6.45)**                           | 21                          | 60.99               |
 
-Analyze 141...
+TODO: Analyze results and 141.0364...
 
 The plot of the objective function as well as the optimal points is as follows:
 
 ![ex1](img/ex1_fit.png)
 
-Is convex?
-Does the graph help? no
+TODO: Does the graph help? no
 
 
 ### Exercise 2
@@ -73,15 +74,15 @@ x<sub>1</sub> - x<sub>2</sub><sup>2</sup> &le; 0
 var  
 x<sub>1</sub>, x<sub>2</sub>
 
-Is convex?
+TODO: Is convex?
 
-Testing with different initial points and SLSQP, the following happened:
+Testing with different initial points x<sub>0</sub> and SLSQP method on Scipy,
 * (x1, x2) = (10, 10) is a **feasible initial point**, and returns the results:
     + Optimal p* = 2.0
     + Coordinates (x1, x2) = (1.0, 1.0)
 * (x1, x2) = (0, 0) is a **non-feasible initial point**. The solver threw the message `Positive directional derivative for linesearch`, meaning that the optimizer got into a position where it did not manage to find a direction where the value of the objective function decreases.
 
-After running the solver with the Jacobian input and the feasible initial point above, the obtained results were the same, with just 9 Jacobian evaluations `njev`, as compared to 73 function evaluations `nfev` without the Jacobian method.
+After running the solver with the Jacobian input and the feasible initial point above, the obtained results were the same, with just 9 Jacobian evaluations `njev` and 40.96ms, as compared to 73 function evaluations `nfev` and 25.06ms without the Jacobian method.
 
 The plot of the objective function is as follows:
 
@@ -102,8 +103,8 @@ x<sub>1</sub><sup>2</sup> + x<sub>1</sub>x<sub>2</sub> + x<sub>2</sub><sup>2</su
 var  
 x<sub>1</sub>, x<sub>2</sub>
 
-Is convex?
-Check convergence
+TODO: Is convex?  
+TODO: Check convergence  
 
 Two different solvers have been used to obtain the optimal:
 * Scipy's `optimize.minimize` library, using SLSQP and the combinations:
@@ -114,14 +115,16 @@ Two different solvers have been used to obtain the optimal:
 
 Using (x<sub>1</sub>, x<sub>2</sub>) = (10, 10) as the initial guess, results are the following:
 
-| Solver                          | Optimal p* | Coordinates (x1,x2) | Iterations   |
-|---------------------------------|------------|---------------------|--------------|
-| Scipy                           | 0.6923     | (0.6923, 0.4615)    | 12           |
-| Scipy with Jacobian             | 0.6923     | (0.6923, 0.4615)    | 4            |
-| Scipy with Jacobian and Hessian | 0.6923     | (0.6923, 0.4615)    | 4            |
-| CVXPY                           | 0.6923     | (0.6923, 0.4615)    | not provided |
+| Solver                          | Optimal p* | Coordinates (x<sub>1</sub>, x<sub>2</sub>)* | Iterations   | Execution time (ms) |
+|---------------------------------|------------|---------------------------------------------|--------------|---------------------|
+| Scipy                           | 0.6923     | (0.6923, 0.4615)                            | 12           | 5.01
+| Scipy with Jacobian             | 0.6923     | (0.6923, 0.4615)                            | 4            | 16.92
+| Scipy with Jacobian and Hessian | 0.6923     | (0.6923, 0.4615)                            | 4            | 17.99
+| CVXPY                           | 0.6923     | (0.6923, 0.4615)                            | not provided | 33.35
 
 CVXPY also provides the dual values &lambda;<sub>1</sub> = 0 and &lambda;<sub>2</sub> = 0.4615.
+
+TODO: analysis
 
 ### Exercise 4
 [Source code](https://github.com/marcelcases/nonlinear-optimization/blob/master/ex4.py)
@@ -144,13 +147,30 @@ status: optimal
 optimal value p* =  4.999999979918552
 optimal var: x =  [2.]
 optimal dual variables lambda =  [2.00003221]
+exec time (ms):  13.0
+````
+
+Using Scipy's `optimize.minimize` with Jacobian and Hessian as the solver, the following results are obtained:
+````
+     fun: array([5.])
+     jac: array([4.])
+ message: 'Optimization terminated successfully'
+    nfev: 8
+     nit: 7
+    njev: 7
+  status: 0
+ success: True
+       x: array([2.])
+JAC+HESS: optimal value p* [5.]
+JAC+HESS: optimal var: x =  [2.]
+exec time (ms):  24.9931640625
 ````
 
 Graphically, 
 
 ![ex4](img/ex4_fit.png)
 
-As shown in the plot, the minimum of the function within the feasible area is the point (x*, p*) = (2.0, 5.0).
+As shown in the plot, the minimum of the function within the feasible area is the point (x*, p*) = (2.0, 5.0). Both solvers converge to the same result.
 
 The dual values obtained are &lambda; = 2 and d*=5.
 
@@ -179,6 +199,8 @@ optimal dual variables lambda1 =  28013.52446782075
 optimal dual variables lambda2 =  28013.52446781738
 ````
 
+TODO: analitzar lambdes
+
 ### Exercise 6
 [Source code](https://github.com/marcelcases/nonlinear-optimization/blob/master/ex6.py)
 
@@ -196,7 +218,7 @@ Two Gradient Descent methods are used:
 * Backtracking Line Search
 * Newton’s Method
 
-This problem has been optimized by using **custom developed solvers** with basic Python libraries.
+This problem has been solved by using a **custom developed solver** for BLS, with basic Python libraries; and Scipy for Newton's.
 
 **Backtracking Line Search algorithm**
 
@@ -204,7 +226,7 @@ This problem has been optimized by using **custom developed solvers** with basic
 def backtrack(dfx, x0, step):
     incumbent = x0 # result
     iters = 0
-    acc = 1e-4
+    acc = 1
     while (acc >= 1e-4):
         newincumbent = incumbent - step*dfx(incumbent)
         acc = np.absolute(newincumbent - incumbent)
@@ -223,25 +245,25 @@ Newton's Method uses a second-order Taylor series expansion of the function abou
 
 For f(x) = 2x<sup>2</sup> - 0.5, with initial point x<sub>0</sub> = 3, the results obtained with both methods are the following:
 
-| Solver                             | Optimal p* | Optimal x* | Iterations |
-|------------------------------------|------------|------------|------------|
-| Backtracking Line Search           | -0.498     | 0.0248     | 1196       |
-| Newton's with Jacobian and Hessian | -0.5       | 0.0        | 5          |
+| Solver                             | Optimal p* | Optimal x* | Iterations | Execution time (ms) |
+|------------------------------------|------------|------------|------------|---------------------|
+| Backtracking Line Search           | -0.498     | 0.0248     | 1196       | 1982.93             |
+| Newton's with Jacobian and Hessian | -0.5       | 0.0        | 5          | 9.00                |
 
 For f(x) = 2x<sup>4</sup> - 4x<sup>2</sup> + x - 0.5, the results obtained with both methods are the following:
 
-| Initial point x0 | Solver                             | Optimal p* | Optimal x* | Iterations |
-|------------------|------------------------------------|------------|------------|------------|
-| -2               | Backtracking Line Search           | -3.529     | -1.062     | 228        |
-| -2               | Newton's with Jacobian and Hessian | -3.529     | -1.057     | 7          |
-| -0.5             | Backtracking Line Search           | -3.529     | -1.052     | 304        |
-| -0.5             | Newton's with Jacobian and Hessian | -3.529     | -1.057     | 8          |
-| 0.5              | Backtracking Line Search           | -1.533     | 0.922      | 399        |
-| 0.5              | Newton's with Jacobian and Hessian | -1.533     | 0.930      | 8          |
-| 2                | Backtracking Line Search           | -1.533     | 0.937      | 297        |
-| 2                | Newton's with Jacobian and Hessian | -1.533     | 0.930      | 7          |
+| Initial point x<sub>0</sub> | Solver                             | Optimal p* | Optimal x* | Iterations | Execution time (ms) |
+|-----------------------------|------------------------------------|------------|------------|------------|---------------------|
+| -2                          | Backtracking Line Search           | -3.529     | -1.062     | 228        | 374.25              |
+| -2                          | Newton's with Jacobian and Hessian | -3.529     | -1.057     | 7          | 15.99               |
+| -0.5                        | Backtracking Line Search           | -3.529     | -1.052     | 304        | 476.43              |
+| -0.5                        | Newton's with Jacobian and Hessian | -3.529     | -1.057     | 8          | 18.02               |
+| 0.5                         | Backtracking Line Search           | -1.533     | 0.922      | 399        | 641.96              |
+| 0.5                         | Newton's with Jacobian and Hessian | -1.533     | 0.930      | 8          | 18.02               |
+| 2                           | Backtracking Line Search           | -1.533     | 0.937      | 297        | 485.86              |
+| 2                           | Newton's with Jacobian and Hessian | -1.533     | 0.930      | 7          | 16.00               |
 
-For the BLS, the `step` parameter has been set to 1e-3. Making it lower will improve the performance of the algorithm by reducing the computing time, but the results would not be as accurate.
+For the BLS, the `step` parameter has been set to 1e-3. Making it lower will improve the performance of the algorithm by reducing the computing time, but the results would not be as thorough. The accuracy (which is also the stop criteria, as specified in the statement) has been set to 1e-4.
 
 **Plots**
 
@@ -250,7 +272,7 @@ For f(x) = 2x<sup>2</sup> - 0.5, any initial point will converge to the global m
 ![ex6a](img/ex6a_fit.png)
 
 For f(x) = 2x<sup>4</sup> - 4x<sup>2</sup> + x - 0.5, depending on the initial point, the solution will fall into either:
-* the local minima, if x<sub>0</sub> &gt; 0.15
+* the local minima, if x<sub>0</sub> &gt; ~0.15
 * the global minima, otherwise
 
 The local minima is (x*, p*) = (0.92, -1.53), and the global minima is (x*, p*) = (-1.05, -3.52).
@@ -331,3 +353,4 @@ CVXPY [https://www.cvxpy.org/](https://www.cvxpy.org/)
 Convex optimization [https://en.wikipedia.org/wiki/Convex_optimization](https://en.wikipedia.org/wiki/Convex_optimization)  
 Sequential Least Squares Programming [https://en.wikipedia.org/wiki/Sequential_quadratic_programming](https://en.wikipedia.org/wiki/Sequential_quadratic_programming)  
 Backtracking Line Search [https://sites.math.washington.edu/~burke/crs/408/lectures/L7-line-search.pdf](https://sites.math.washington.edu/~burke/crs/408/lectures/L7-line-search.pdf)  
+Quadratic Programming with Python and CVXOPT [https://courses.csail.mit.edu/6.867/wiki/images/a/a7/Qp-cvxopt.pdf](https://courses.csail.mit.edu/6.867/wiki/images/a/a7/Qp-cvxopt.pdf)  
