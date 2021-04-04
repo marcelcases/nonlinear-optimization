@@ -202,9 +202,10 @@ optimal dual variables lambda2 =  28013.52446781738
 TODO: analitzar lambdes
 
 ### Exercise 6
-[Source code](https://github.com/marcelcases/nonlinear-optimization/blob/master/ex6.py)
 
 **Gradient Descent Methods for an unconstrained optimization problem**
+
+[Source code](https://github.com/marcelcases/nonlinear-optimization/blob/master/ex6.py)
 
 The Gradient Descent Algorithm assumes that
 
@@ -280,9 +281,10 @@ The local minima is (x*, p*) = (0.92, -1.53), and the global minima is (x*, p*) 
 ![ex6b](img/ex6b_fit.png)
 
 ### Exercise 7
-[Source code](https://github.com/marcelcases/nonlinear-optimization/blob/master/ex7.py)
 
 **Network Utility problem**
+
+[Source code](https://github.com/marcelcases/nonlinear-optimization/blob/master/ex7.py)
 
 A networking problem where sources traverse links from routers in order to transmit data. Source 1 traverses link 1 and 2, source 2 traverses link 2 and source 3 traverses link 1 and 5. The goal is to maximize the transmission rate _x<sub>s</sub>_.
 
@@ -314,9 +316,10 @@ optimal dual variables lambda1 = 1.7320483134403175
 ````
 
 ### Exercise 8
-[Source code](https://github.com/marcelcases/nonlinear-optimization/blob/master/ex8.py)
 
 **Resource Allocation problem**
+
+[Source code](https://github.com/marcelcases/nonlinear-optimization/blob/master/ex8.py)
 
 A resource allocation problem for a wireless network where traffic has to be assigned to nodes and links. Collisions have to be avoided (e.g. time R<sub>12</sub> can not transmit simultaneously with R<sub>23</sub>), and links are bidirectional (R<sub>12</sub> + R<sub>23</sub> + R<sub>32</sub> &le; 1).
 
