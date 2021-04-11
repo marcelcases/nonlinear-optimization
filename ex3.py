@@ -34,9 +34,11 @@ bnds = ((None, None), (None, None))
 bnds = ((None, None), )*2
 
 # initial guess
-x0 = (10,10)
 # x0 = (1,1)
-
+x0 = (10,10)
+# x0 = (-10,10)
+# x0 = (10,-10)
+# x0 = (-10,-10)
 
 # Method SLSQP uses Sequential Least SQuares Programming to minimize a function 
 # of several variables with any combination of bounds, equality and inequality constraints. 
